@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%; display: flex; align-items: stretch;">
     <section class="menu">
       <div class="overlay" v-show="seen">
         <div class="nav-menu">
@@ -50,60 +50,130 @@
         </div>
       </div>
     </section>
-    <section class="banner">
-      <div class="container">
-        <div class="row">
-          <div class="menu-panel">
-            <a href="#" class="menu-panel__btn hamburger-btn" @click="showMenu">
-              <span></span>
-              <span></span>
-              <span></span>
-            </a>
-            <a href="#" class="menu-panel__loc site-localization">
-              Eng
-            </a>
-          </div>
-          <router-view/>
+    <div class="main-banner-part">
+      <div class="main-banner-part__top main-banner-top">
+        <a href="#" class="menu-panel__btn hamburger-btn hamburger-btn_mobile" @click="showMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+        <div class="main-banner-top__title">Need for drive</div>
+        <div class="main-banner-top__location">
+          <svg class="icon-geo-location" width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.0802 8.36364C16.0802 14.0909 8.54011 19 8.54011 19C8.54011 19 1 14.0909 1 8.36364C1 6.41068 1.7944 4.53771 3.20845 3.15676C4.62249 1.77581 6.54035 1 8.54011 1C10.5399 1 12.4577 1.77581 13.8718 3.15676C15.2858 4.53771 16.0802 6.41068 16.0802 8.36364Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8.5401 10.8182C9.9282 10.8182 11.0535 9.71925 11.0535 8.36364C11.0535 7.00803 9.9282 5.90909 8.5401 5.90909C7.15201 5.90909 6.02673 7.00803 6.02673 8.36364C6.02673 9.71925 7.15201 10.8182 8.5401 10.8182Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Ульяновск</span>
         </div>
       </div>
-    </section>
+      <div class="main-banner-part__middle main-banner-middle">
+        <div class="main-banner-middle__title">
+          <span>Каршеринг</span>
+          <h1>Need for drive</h1>
+        </div>
+        <div class="main-banner-middle__note">
+          Поминутная аренда авто твоего города
+        </div>
+        <router-link class="main-banner-middle__btn default-btn" to="/order">Забронировать</router-link>
+      </div>
+      <div class="main-banner-part__bottom main-banner-bottom">
+        <div class="main-banner-bottom__copyright">
+          © 2016-2019 «Need for drive»
+        </div>
+        <a class="main-banner-bottom__tel" href="tel:84952342244">8 (495) 234-22-44</a>
+      </div>
+    </div>
+    <swiper id="main_carousel" class="banner-carousel" :options="swiperOption" :slides-per-view="1"
+            :space-between="50"
+            navigation
+            :pagination="{ clickable: true }"
+            :scrollbar="{ draggable: true }"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange" >
+      <swiper-slide v-for="(item, index) in slideContent" v-bind:key="index">
+        <div class="banner-carousel__slide banner-slide" v-bind:class="item.class">
+          <div class="banner-slide__content">
+            <div class="banner-slide__content-title">
+              {{ item.title }}
+            </div>
+            <div class="banner-slide__content-note">
+              {{ item.description }}
+            </div>
+            <a href="#" class="banner-slide__content-button default-btn">
+              Подробнее
+            </a>
+          </div>
+        </div>
+      </swiper-slide>
+      <div class="swiper-button-prev" slot="button-prev"></div>
+      <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
   </div>
 
 </template>
-<style lang="scss">
-@import './assets/scss/main';
-</style>
+
 <script>
-// import HelloWorld from './components/HelloWorld';
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-import 'swiper/components/scrollbar/scrollbar.scss';
-
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+// import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
 export default {
-  name: 'App',
+  data () {
+    return {
+      seen: false,
+      showcondition: false,
+      swiperOption: {
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      },
+      slideContent: [
+        {
+          class: 'banner-slide_1',
+          title: 'Бесплатная парковка',
+          description: 'Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.'
+        },
+        {
+          class: 'banner-slide_2',
+          title: 'Страховка',
+          description: 'Полная страховка страховка автомобиля'
+        },
+        {
+          class: 'banner-slide_3',
+          title: 'Бензин',
+          description: 'Полный бак на любой заправке города за наш счёт'
+        },
+        {
+          class: 'banner-slide_4',
+          title: 'Обслуживание',
+          description: 'Автомобиль проходит еженедельное ТО'
+        }
+      ]
+    }
+  },
   components: {
-    // HelloWorld,
-
+    Swiper,
+    SwiperSlide,
+  },
+  directives: {
+    swiper: directive
   },
   methods: {
+    onSwiper(swiper) {
+      console.log(swiper)
+
+    },
     showMenu() {
       this.showcondition = !this.showcondition;
       this.seen = !this.seen;
     },
     closeMenu() {
       this.seen = !this.seen;
-    }
+    },
+    onSlideChange() {
+
+    },
+
   },
-  data: () => ({
-    //
-    seen: false,
-    showcondition: false,
-    currentRoute: window.location.pathname,
-    publicPath: process.env.BASE_URL
-  }),
-};
+}
 </script>

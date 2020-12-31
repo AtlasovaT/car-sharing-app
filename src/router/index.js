@@ -26,6 +26,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/OrderFinal.vue')
   },
+  {
+    path: '/admin',
+    name: 'Admin',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Autorization.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -35,4 +43,4 @@ const router = new VueRouter({
 })
 
 export default router
-router.push('/order', '/final')
+router.push('/order', '/final', '/admin')

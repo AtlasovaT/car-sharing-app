@@ -20,13 +20,31 @@
 </template>
 
 <script>
+// import axios from "axios";
+
 export default {
   name: "Autorization",
   data: function() {
     return {
-        count: 0
+        count: 0,
+        getLoginResult: null
       };
-}
+  },
+  // created() {
+  //   const headers = {
+  //     "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
+  //     "Authorization": "Basic MTFkN2M5Z2FmNjo0Y2JjZWE5NmRl"
+  //   };
+  //   axios.post("http://api-factory.simbirsoft1.com/api/auth/login", {
+  //     headers: headers,
+  //     login: this.username,
+  //     password: this.password
+  //   }).then(response => {
+  //     this.getLoginResult = response.data
+  //     console.log(this.getLoginResult)
+  //     return ''
+  //   } );
+  // },
 }
 </script>
 
